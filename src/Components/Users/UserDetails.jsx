@@ -1,8 +1,9 @@
+import { ArrowLeft } from 'lucide-react';
 import React from 'react';
-import { Link, useLoaderData,  } from 'react-router';
+import { Link, useLoaderData, useNavigate,  } from 'react-router';
 
 const UserDetails = () => {
-
+    const navigate = useNavigate();
     const user = useLoaderData();
     console.log(user);
 
@@ -12,7 +13,11 @@ const UserDetails = () => {
     
     return (
         <div className='border-red-400 border-2 p-4 '>
-            <h1 className='text-3xl font-semibold my-2'>Personal Info</h1>
+            <div>
+                <button onClick={()=> navigate(-1)} className='btn'><ArrowLeft></ArrowLeft></button>
+            </div>
+            <h1 className='text-3xl font-semibold 
+            my-2'>Personal Info</h1>
             <div className='flex items-center justify-start gap-3'>
             <img className='w-16 rounded-full object-cover' src={image} alt="" />
             <h1>Name: {firstName} {maidenName} {lastName} ({username})  </h1>

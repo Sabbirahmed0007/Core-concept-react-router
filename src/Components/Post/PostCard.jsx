@@ -1,11 +1,12 @@
 import React from 'react';
-import { ThumbsDown, ThumbsUp } from 'lucide-react';
-import { useLoaderData } from 'react-router';
+import { ArrowLeft, ThumbsDown, ThumbsUp } from 'lucide-react';
+import { useLoaderData, useNavigate } from 'react-router';
 
 const PostCard = () => {
 
 
-    const post= useLoaderData()
+    const post = useLoaderData()
+    const navigate= useNavigate()
 
     console.log(post);
     
@@ -19,10 +20,18 @@ const PostCard = () => {
     // console.log(viewInH, viewInk);
     const ultimateViews= `${viewInk}.${viewInH}`
     
+    const handleGoBack = () => {
+
+        navigate(-1);
+        
+    }
     
 
     return (
         <div className=' w-96 lg:w-full mx-auto p-4  rounded-2xl shadow-2xl'>
+            <div>
+                <button onClick={handleGoBack} className='btn btn-sm btn-warning'><ArrowLeft></ArrowLeft></button>
+            </div>
             <h1 className='text-lg font-semibold my-2 h-14 overflow-hidden'>{title} </h1>
             <p className='text-sm h-44 overflow-auto'>{ body}</p>
             <p >{tags.map(tag => <h1 key={tag.id} className=' badge badge-soft badge-info  mx-1 my-2'>{tag}</h1>)}</p>

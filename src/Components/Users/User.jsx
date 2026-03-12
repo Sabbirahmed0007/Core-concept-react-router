@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { Suspense, useState } from 'react';
 import { Link } from 'react-router';
+import UserDetailsTwo from './UserDetailsTwo';
 
 const User = ({ user }) => {
+    const { age, image, id, firstName } = user;
     
-
+    const [showInfo, setShowInfo]=useState(false);
     // console.log(user);
-    const { age, image, id , firstName } = user;
+    
+    
+    const userJson = async () => {
+        const res = await fetch(`https://dummyjson.com/users/${id}`)
+    
+        return res.json();
+    
+            
+    }
+    
+    const userPromise = userJson();
+    console.log(userPromise);
     
 
 
@@ -15,7 +28,17 @@ const User = ({ user }) => {
             <h1>Name: { firstName}</h1>
             <p>Age: {age}</p>
             <div>
-                <Link to={ `/users/${id}`} className='btn btn-secondary'>Details</Link>
+                <Link to={`/users/${id}`} className='btn btn-secondary'>Show Info</Link>
+                {/* -------------------------------- */}
+                <Link onClick={() => setShowInfo(!showInfo)} className='btn btn-secondary'>{showInfo ? "Hide" : "Show"}</Link>
+                <div>
+                {
+                        showInfo && <Suspense>
+                            <UserDetailsTwo userPromise={userPromise}></UserDetailsTwo>
+                    </Suspense>
+                }
+
+                </div>
             </div>
         </div>
     );
